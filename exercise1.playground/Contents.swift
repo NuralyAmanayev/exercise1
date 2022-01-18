@@ -15,8 +15,8 @@ func coordinates(x1: Double, x2: Double, x3: Double, y1: Double, y2: Double, y3:
     if prepyatstviye == false {
          d = sqrt(pow((x2-x1), 2) + pow((y2-y1), 2) + pow((z2-z1), 2))
          d1 = sqrt(pow((x3-x2), 2) + pow((y3-y2), 2) + pow((z3-z2), 2))
-        print(d)
-        print(d1)
+        print("distance between first and second points = \(d)")
+        print("distance between second and third points = \(d1)")
         
     } else {
         print("somethong went wrong")
