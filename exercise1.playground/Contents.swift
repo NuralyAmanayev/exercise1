@@ -23,4 +23,9 @@ func coordinates(x1: Double, x2: Double, x3: Double, y1: Double, y2: Double, y3:
     }
 }
 
-coordinates(x1: 5.0, x2: 1, x3: 3, y1: 2.0, y2: 2, y3: 0, z1: 6, z2: 0, z3: 3, prepyatstviye: false)
+coordinates(x1: 5.0, x2: 1, x3: 3, y1: 2.0, y2: 2, y3: 0, z1: 6, z2: 0, z3: 3, prepyatstviye: true)
+
+
+
+
+
