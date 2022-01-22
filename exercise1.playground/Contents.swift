@@ -1,5 +1,5 @@
 import UIKit
-
+//import Foundation
 
 /*
  Задание 1
@@ -9,21 +9,18 @@ import UIKit
 */
 
 
-func coordinates(x1: Double, x2: Double, x3: Double, y1: Double, y2: Double, y3: Double, z1: Double, z2: Double, z3: Double, prepyatstviye: Bool){
+func coordinates(x1: Double, x2: Double, x3: Double, y1: Double, y2: Double, y3: Double, z1: Double, z2: Double, z3: Double){
     var d: Double
     var d1: Double
-    if prepyatstviye == false {
-         d = sqrt(pow((x2-x1), 2) + pow((y2-y1), 2) + pow((z2-z1), 2))
-         d1 = sqrt(pow((x3-x2), 2) + pow((y3-y2), 2) + pow((z3-z2), 2))
-        print("distance between first and second points = \(d)")
-        print("distance between second and third points = \(d1)")
+    
+    d = sqrt(pow((x2-x1), 2) + pow((y2-y1), 2) + pow((z2-z1), 2))
+    d1 = sqrt(pow((x3-x2), 2) + pow((y3-y2), 2) + pow((z3-z2), 2))
+    print("distance between first and second points = \(d)")
+    print("distance between second and third points = \(d1)")
         
-    } else {
-        print("somethong went wrong")
-    }
 }
 
-coordinates(x1: 5.0, x2: 1, x3: 3, y1: 2.0, y2: 2, y3: 0, z1: 6, z2: 0, z3: 3, prepyatstviye: true)
+coordinates(x1: 5.0, x2: 1, x3: 3, y1: 2.0, y2: 2, y3: 0, z1: 6, z2: 0, z3: 3)
 
 
 /*
@@ -33,342 +30,320 @@ coordinates(x1: 5.0, x2: 1, x3: 3, y1: 2.0, y2: 2, y3: 0, z1: 6, z2: 0, z3: 3, p
  При помощи объектно-ориентированного подхода создать свой маленький кусочек дикой природы. В нём должны присутствовать, как минимум, 4 утки, 7 колибри, 3 медведя, 5 волков, павлин и 2 бобра. Все обитатели должны уметь делать базовые вещи такие как ходить, летать, есть (если это могут делать их прототипы из реальной жизни, например, очевидно, что медведь не умеет летать, а колибри ходить). Также необходимо придумать и реализовать механизм контроля текущего занятия животного (т.е. того, чем оно сейчас занимается: ест, спит, перемещается, охотится и т.п.).
 
  */
-enum Motion {
-    case Fly, Walk, Swim, FlyAndWalk, FlyAndSwim, WalkAndSwim, FlyWalkAndSwim
-    
-    init(){
-        self = .Fly
-        self = .Walk
-        self = .Swim
-        self = .FlyAndWalk
-        self = .FlyAndSwim
-        self = .WalkAndSwim
-        self = .FlyWalkAndSwim
-    }
-//    func chooseMoving() {
-//        switch self {
-//        case .Fly:
-//            print("I can fly")
-//        case .Walk:
-//            print("I can walk")
-//        case .Swim:
-//            print("I can swim")
-//        case .FlyAndWalk:
-//            print("I can fly and walk")
-//        case .FlyAndSwim:
-//            print("I can fly and swim")
-//        case .WalkAndSwim:
-//            print("I can walk and swim")
-//        case .FlyWalkAndSwim:
-//            print("I can fly, walk and swim")
-//        default:
-//            print("I can't fly walk and swim")
-//
-//
-//        }
-    }
+
     
 
 protocol Animal{
     var name: String { get }
     var age: Int { get }
     var colour: String { get }
-}
-
-protocol BasicPropertiesOfAnimals{
-//    var kindOfAnimal: String{ get }
-//    var name: String { get }
-//    var age: Int { get }
-//    var colour: String { get }
-    var move: Motion { get }
-    mutating func eatingNow(eatingNow: Bool) -> Bool
-//    mutating func motion(text: String) -> String
-    mutating func motionNow(motionNow: Bool) -> Bool
-    mutating func sleepingNow(sleepingNow: Bool) -> Bool
-    mutating func nowMovemingForFood(nowMovemingForFood: Bool) -> Bool
-}
-
-
-
-struct Duck: BasicPropertiesOfAnimals{
-    var move: Motion
-    var kindOfAnimal: String
-    var name: String
-    var age: Int
-    var colour: String
-
-    
-    
-    
-    mutating func eatingNow(eatingNow: Bool) -> Bool {
-        
-        return eatingNow
-    }
-    
-    mutating func motionNow(motionNow: Bool) -> Bool {
-        
-        return motionNow
-    }
-    
-    mutating func sleepingNow(sleepingNow: Bool) -> Bool {
-        
-        return sleepingNow
-    }
-    
-    mutating func nowMovemingForFood(nowMovemingForFood: Bool) -> Bool {
-        
-        return nowMovemingForFood
-    }
+    var currentState: String { get }
+    func eat()
+    func sleep()
     
 }
 
-struct Hummingbird: BasicPropertiesOfAnimals{
-    var move: Motion
-    var kindOfAnimal: String
-    var name: String
-    var age: Int
-    var colour: String
+protocol Walker{
+    func walk()
+}
+
+protocol Flier{
+    func fly()
+}
+
+protocol Swimmer{
+    func swim()
+}
+
+protocol Hunter{
+    func hunt()
+}
+
+
+
+
+class Duck: Animal, Walker, Flier, Swimmer {
     
-    mutating func eatingNow(eatingNow: Bool) -> Bool {
-        return eatingNow
+    var currentState: String = ""
+    
+    var name: String = ""
+    
+    var age: Int = 0
+    
+    var colour: String = ""
+    
+    func eat() {
+        currentState = "eating"
     }
     
-    mutating func motionNow(motionNow: Bool) -> Bool {
-        return motionNow
+    func walk() {
+        currentState = "walking"
     }
     
-    mutating func sleepingNow(sleepingNow: Bool) -> Bool {
-        return sleepingNow
+    func fly() {
+        currentState = "flying"
     }
     
-    mutating func nowMovemingForFood(nowMovemingForFood: Bool) -> Bool {
-        return nowMovemingForFood
+    func swim() {
+        currentState = "swimming"
+    }
+    func sleep() {
+        currentState = "sleeping"
+    }
+    
+    init(currentState: String, name: String, age: Int, colour: String) {
+        self.currentState = currentState
+        self.name = name
+        self.age = age
+        self.colour = colour
     }
     
 }
 
-struct Bear: BasicPropertiesOfAnimals{
-    var kindOfAnimal: String
-    var move: Motion
-    var name: String
-    var age: Int
-    var colour: String
+class HummingBird: Animal, Flier {
+    var currentState: String = ""
     
-    mutating func eatingNow(eatingNow: Bool) -> Bool {
-        return eatingNow
+    var name: String = ""
+    
+    var age: Int = 0
+    
+    var colour: String = ""
+    
+    func eat() {
+        currentState = "eating"
+    }
+    func fly() {
+        currentState = "flying"
     }
     
-    mutating func motionNow(motionNow: Bool) -> Bool {
-        return motionNow
+    func sleep() {
+        currentState = "sleeping"
     }
     
-    mutating func sleepingNow(sleepingNow: Bool) -> Bool {
-        return sleepingNow
+    init(currentState: String, name: String, age: Int, colour: String) {
+        self.currentState = currentState
+        self.name = name
+        self.age = age
+        self.colour = colour
     }
-    
-    mutating func nowMovemingForFood(nowMovemingForFood: Bool) -> Bool {
-        return nowMovemingForFood
-    }
-    
     
 }
 
-struct Wolf: BasicPropertiesOfAnimals{
-    var kindOfAnimal: String
-    var move: Motion
-    var name: String
-    var age: Int
-    var colour: String
+class Bear: Animal, Walker, Swimmer, Hunter{
+    var name: String = ""
     
-    mutating func eatingNow(eatingNow: Bool) -> Bool {
-        return eatingNow
+    var age: Int = 0
+    
+    var colour: String = ""
+    
+    var currentState: String = ""
+    
+    func eat() {
+            currentState = "eating"
     }
     
-    mutating func motionNow(motionNow: Bool) -> Bool {
-        return motionNow
+    func walk() {
+        currentState = "walking"
     }
     
-    mutating func sleepingNow(sleepingNow: Bool) -> Bool {
-        return sleepingNow
+    func swim() {
+        currentState = "swimming"
     }
     
-    mutating func nowMovemingForFood(nowMovemingForFood: Bool) -> Bool {
-        return nowMovemingForFood
-    }
-
-}
-
-struct Peacock: BasicPropertiesOfAnimals{
-    var kindOfAnimal: String
-    var move: Motion
-    var name: String
-    var age: Int
-    var colour: String
-    
-    
-    
-     mutating func eatingNow(eatingNow: Bool) -> Bool {
-        return eatingNow
+    func hunt() {
+        currentState = "hunting"
     }
     
-    mutating func motionNow(motionNow: Bool) -> Bool {
-        return motionNow
+    func sleep() {
+        currentState = "sleeping"
     }
     
-    mutating func sleepingNow(sleepingNow: Bool) -> Bool {
-        return sleepingNow
-    }
-    
-    mutating func nowMovemingForFood(nowMovemingForFood: Bool) -> Bool {
-        return nowMovemingForFood
-    }
-   
-}
-
-
-struct Beaver: BasicPropertiesOfAnimals{
-    var kindOfAnimal: String
-    var move: Motion
-    var name: String
-    var age: Int
-    var colour: String
-    
-    mutating func eatingNow(eatingNow: Bool) -> Bool {
-        return eatingNow
-    }
-    
-    mutating func motionNow(motionNow: Bool) -> Bool {
-        return motionNow
-    }
-    
-    mutating func sleepingNow(sleepingNow: Bool) -> Bool {
-        return sleepingNow
-    }
-    
-    mutating func nowMovemingForFood(nowMovemingForFood: Bool) -> Bool {
-        return nowMovemingForFood
+    init(currentState: String, name: String, age: Int, colour: String) {
+        self.currentState = currentState
+        self.name = name
+        self.age = age
+        self.colour = colour
     }
 
 }
 
-var d = Duck(move: Motion.FlyWalkAndSwim, kindOfAnimal: "Duck", name: "duck1", age: 1, colour: "white")//, motionOfDuck: Motion.FlyWalkAndSwim)
-//d.chooseMovingOfDuck
-//d.motionOfDuck
-d.eatingNow(eatingNow: false)
-d.motionNow(motionNow: true)
-d.nowMovemingForFood(nowMovemingForFood: true)
 
-var d1 = Duck(move: Motion.FlyWalkAndSwim, kindOfAnimal: "Duck", name: "duck2", age: 2, colour: "black")
-d1.eatingNow(eatingNow: true)
-d1.motionNow(motionNow: false)
-d1.nowMovemingForFood(nowMovemingForFood: false)
-
-var d2 = Duck(move: Motion.WalkAndSwim, kindOfAnimal: "Duck", name: "duck3", age: 3, colour: "blue")
-d2.eatingNow(eatingNow: false)
-d2.motionNow(motionNow: true)
-d2.nowMovemingForFood(nowMovemingForFood: false)
-
-var d3 = Duck(move: Motion.Walk, kindOfAnimal: "Duck", name: "duck4", age: 4, colour: "gray")
-d3.eatingNow(eatingNow: false)
-d3.motionNow(motionNow: false)
-d3.nowMovemingForFood(nowMovemingForFood: false)
-
-
-var h = Hummingbird(move: Motion.Fly, kindOfAnimal: "Hummingbird", name: "hummingbird1", age: 1, colour: "white")
-h.eatingNow(eatingNow: true)
-h.motionNow(motionNow: false)
-h.nowMovemingForFood(nowMovemingForFood: false)
-
-var h1 = Hummingbird(move: Motion.Fly, kindOfAnimal: "Hummingbird", name: "hummingbird2", age: 2, colour: "black")
-h1.eatingNow(eatingNow: false)
-h1.motionNow(motionNow: true)
-h1.nowMovemingForFood(nowMovemingForFood: true)
-
-var h2 = Hummingbird(move: Motion.Fly, kindOfAnimal: "Hummingbird", name: "hummingbird3", age: 3, colour: "yellow")
-h2.eatingNow(eatingNow: false)
-h2.motionNow(motionNow: true)
-h2.nowMovemingForFood(nowMovemingForFood: false)
-
-var h3 = Hummingbird(move: Motion.Fly, kindOfAnimal: "Hummingbird", name: "hummingbird4", age: 4, colour: "green")
-h3.eatingNow(eatingNow: true)
-h3.motionNow(motionNow: true)
-h3.nowMovemingForFood(nowMovemingForFood: false)
-
-var h4 = Hummingbird(move: Motion.Fly, kindOfAnimal: "Hummingbird", name: "hummingbird5", age: 5, colour: "blue")
-h4.eatingNow(eatingNow: false)
-h4.motionNow(motionNow: true)
-h4.nowMovemingForFood(nowMovemingForFood: true)
-
-var h5 = Hummingbird(move: Motion.Fly, kindOfAnimal: "Hummingbird", name: "hummingbird6", age: 6, colour: "gray")
-h5.eatingNow(eatingNow: false)
-h5.motionNow(motionNow: true)
-h5.nowMovemingForFood(nowMovemingForFood: true)
-
-var h6 = Hummingbird(move: Motion.Fly, kindOfAnimal: "Hummingbird", name: "hummingbird7", age: 7, colour: "red")
-h6.eatingNow(eatingNow: true)
-h6.motionNow(motionNow: true)
-h6.nowMovemingForFood(nowMovemingForFood: false)
-
-var b = Bear(kindOfAnimal: "Bear", move: Motion.WalkAndSwim, name: "bear1", age: 1, colour: "brown")
-b.eatingNow(eatingNow: true)
-b.motionNow(motionNow: false)
-b.nowMovemingForFood(nowMovemingForFood: false)
-
-var b1 = Bear(kindOfAnimal: "Bear", move: Motion.WalkAndSwim, name: "bear2", age: 2, colour: "white")
-b.eatingNow(eatingNow: false)
-b.motionNow(motionNow: true)
-b.nowMovemingForFood(nowMovemingForFood: true)
-
-var b2 = Bear(kindOfAnimal: "Bear", move: Motion.Walk, name: "bear3", age: 3, colour: "black")
-b2.eatingNow(eatingNow: false)
-b2.motionNow(motionNow: true)
-b2.nowMovemingForFood(nowMovemingForFood: false)
-
-var w = Wolf(kindOfAnimal: "Wolf", move: Motion.WalkAndSwim, name: "wolf1", age: 1, colour: "white")
-w.eatingNow(eatingNow: true)
-w.motionNow(motionNow: false)
-w.nowMovemingForFood(nowMovemingForFood: false)
-
-var w1 = Wolf(kindOfAnimal: "Wolf", move: Motion.Walk, name: "wolf2", age: 2, colour: "black")
-w1.eatingNow(eatingNow: false)
-w1.motionNow(motionNow: true)
-w1.nowMovemingForFood(nowMovemingForFood: false)
-
-var w2 = Wolf(kindOfAnimal: "Wolf", move: Motion.WalkAndSwim, name: "wolf3", age: 3, colour: "gray")
-w2.eatingNow(eatingNow: false)
-w2.motionNow(motionNow: true)
-w2.nowMovemingForFood(nowMovemingForFood: true)
-
-var w3 = Wolf(kindOfAnimal: "Wolf", move: Motion.Walk, name: "wolf4", age: 4, colour: "brown")
-w3.eatingNow(eatingNow: true)
-w3.motionNow(motionNow: false)
-w3.nowMovemingForFood(nowMovemingForFood: false)
-
-var w4 = Wolf(kindOfAnimal: "Wolf", move: Motion.WalkAndSwim, name: "wolf5", age: 5, colour: "brown and black")
-w4.eatingNow(eatingNow: false)
-w4.motionNow(motionNow: true)
-w4.nowMovemingForFood(nowMovemingForFood: false)
-
-var p = Peacock(kindOfAnimal: "Peacock", move: Motion.Walk, name: "peacock1", age: 1, colour: "white")
-p.eatingNow(eatingNow: true)
-p.motionNow(motionNow: false)
-p.nowMovemingForFood(nowMovemingForFood: false)
-
-var beaver1 = Beaver(kindOfAnimal: "Beaver", move: Motion.Walk, name: "beaver1", age: 1, colour: "brown")
-beaver1.eatingNow(eatingNow: true)
-beaver1.motionNow(motionNow: false)
-beaver1.nowMovemingForFood(nowMovemingForFood: false)
-
-var beaver2 = Beaver(kindOfAnimal: "Beaver", move: Motion.Walk, name: "beaver2", age: 2, colour: "brown")
-beaver2.eatingNow(eatingNow: false)
-beaver2.motionNow(motionNow: true)
-beaver2.nowMovemingForFood(nowMovemingForFood: true)
-
-
-var wildlife: [BasicPropertiesOfAnimals] = [d, d1, d2, d3, h, h1, h2, h3, h4, h5, h6, b, b1, b2, w, w1, w2, w3, w4, p, beaver1, beaver2]
-
-func tracing(wildlife: [BasicPropertiesOfAnimals]){
-    for var animal in wildlife {
-        print("kind of animal: \(animal.kindOfAnimal), name of animal: \(animal.name), age of animal: \(animal.age), colour of animal: \(animal.colour), how move this animal: \(animal.move), is now animal eating: \(animal.eatingNow(eatingNow: ))")
+class Wolf: Animal, Walker, Swimmer, Hunter{
+    var name: String = ""
+    
+    var age: Int = 0
+    
+    var colour: String = ""
+    
+    var currentState: String = ""
+    
+    func eat() {
+        currentState = "eating"
     }
+    
+    func walk() {
+        currentState = "walking"
+    }
+    
+    func swim() {
+        currentState = "swimming"
+    }
+    
+    func hunt() {
+        currentState = "hunting"
+    }
+    
+    func sleep() {
+        currentState = "sleeping"
+    }
+    
+    init(currentState: String, name: String, age: Int, colour: String) {
+        self.currentState = currentState
+        self.name = name
+        self.age = age
+        self.colour = colour
+    }
+
+
 }
+
+
+class Peacock: Animal, Walker {
+    var name: String = ""
+    
+    var age: Int = 0
+    
+    var colour: String = ""
+    
+    var currentState: String = ""
+    
+    func eat() {
+        currentState = "eating"
+    }
+    
+    func walk() {
+        currentState = "walking"
+    }
+    
+    func sleep() {
+        currentState = "sleeping"
+    }
+    
+    init(currentState: String, name: String, age: Int, colour: String) {
+        self.currentState = currentState
+        self.name = name
+        self.age = age
+        self.colour = colour
+    }
+
+}
+
+class Beaver: Animal, Walker, Swimmer{
+    
+    var name: String = ""
+    
+    var age: Int = 0
+    
+    var colour: String = ""
+    
+    var currentState: String = ""
+    
+    func eat() {
+        currentState = "eating"
+    }
+    
+    func walk() {
+        currentState = "walking"
+    }
+    
+    func sleep() {
+        currentState = "sleeping"
+    }
+    
+    func swim() {
+        currentState = "swimming"
+    }
+    
+    init(currentState: String, name: String, age: Int, colour: String) {
+        self.currentState = currentState
+        self.name = name
+        self.age = age
+        self.colour = colour
+    }
+
+}
+
+class Nature{
+    var animals = [Animal]()
+    
+    init(animals: [Animal]) {
+        self.animals = animals
+    }
+    
+    func tracing() {
+        for animal in self.animals {
+            print("name of animal: \(animal.name), age of animal: \(animal.age), colour of animal: \(animal.colour), current state of this animal: \(animal.currentState)")
+        }
+    }
+
+
+}
+
+
+
+var duck1 = Duck(currentState: "walking", name: "Duck1", age: 1, colour: "white")
+duck1.eat()
+var duck2 = Duck(currentState: "walking", name: "Duck2", age: 2, colour: "black")
+duck2.swim()
+var duck3 = Duck(currentState: "walking", name: "Duck3", age: 3, colour: "blue-gray")
+duck3.fly()
+var duck4 = Duck(currentState: "walking", name: "Duck4", age: 4, colour: "gray")
+duck4.sleep()
+
+
+var hummingBird1 = HummingBird(currentState: "fly", name: "HummingBird1", age: 1, colour: "green")
+hummingBird1.eat()
+var hummingBird2 = HummingBird(currentState: "fly", name: "HummingBird2", age: 2, colour: "blue")
+hummingBird1.sleep()
+var hummingBird3 = HummingBird(currentState: "fly", name: "HummingBird3", age: 3, colour: "mixed colour")
+var hummingBird4 = HummingBird(currentState: "fly", name: "HummingBird4", age: 4, colour: "mixed colour")
+var hummingBird5 = HummingBird(currentState: "fly", name: "HummingBird5", age: 5, colour: "mixed colour")
+hummingBird5.eat()
+var hummingBird6 = HummingBird(currentState: "fly", name: "HummingBird6", age: 6, colour: "mixed colour")
+var hummingBird7 = HummingBird(currentState: "fly", name: "HummingBird7", age: 7, colour: "mixed colour")
+hummingBird7.sleep()
+
+
+var bear1 = Bear(currentState: "walking", name: "Bear1", age: 1, colour: "brown")
+var bear2 = Bear(currentState: "walking", name: "Bear2", age: 2, colour: "white")
+bear2.swim()
+var bear3 = Bear(currentState: "walking", name: "Bear3", age: 3, colour: "black")
+bear3.hunt()
+
+
+var wolf1 = Wolf(currentState: "walking", name: "Wolf1", age: 1, colour: "white")
+var wolf2 = Wolf(currentState: "walking", name: "Wolf2", age: 2, colour: "black")
+wolf2.hunt()
+var wolf3 = Wolf(currentState: "walking", name: "Wolf3", age: 3, colour: "gray")
+wolf3.eat()
+var wolf4 = Wolf(currentState: "walking", name: "Wolf4", age: 4, colour: "brown")
+wolf4.sleep()
+var wolf5 = Wolf(currentState: "walking", name: "Wolf5", age: 5, colour: "black")
+wolf5.sleep()
+
+
+
+
+var peacock1 = Peacock(currentState: "walking", name: "Peacock1", age: 1, colour: "mixed color")
+
+
+var beaver1 = Beaver(currentState: "walking", name: "Beaver1", age: 1, colour: "brown")
+var beaver2 = Beaver(currentState: "walking", name: "Beaver2", age: 2, colour: "brown")
+beaver2.eat()
+
+
+var wildlife = Nature(animals: [duck1, duck2, duck3, duck4, hummingBird1, hummingBird2, hummingBird3, hummingBird4, hummingBird5, hummingBird6, hummingBird7, bear1, bear2, bear3, wolf1, wolf2, wolf3, wolf4, wolf5, peacock1, beaver1, beaver2])
+
+wildlife.tracing()
+
+
