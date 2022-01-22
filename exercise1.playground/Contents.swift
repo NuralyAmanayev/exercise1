@@ -1,7 +1,8 @@
 import UIKit
-//import Foundation
 
 /*
+ Completed by: Аманаев Нурали
+ 
  Задание 1
  
  
@@ -24,6 +25,8 @@ coordinates(x1: 5.0, x2: 1, x3: 3, y1: 2.0, y2: 2, y3: 0, z1: 6, z2: 0, z3: 3)
 
 
 /*
+ Completed by: Аманаев Нурали
+ 
  Задание 2
 
 
